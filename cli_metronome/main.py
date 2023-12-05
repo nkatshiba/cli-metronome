@@ -3,21 +3,19 @@ import pygame
 import urwid
 
 pygame.mixer.init()
-
 beat_sound = pygame.mixer.Sound('sounds/high.wav')
 accent_sound = pygame.mixer.Sound('sounds/bright.wav')
-
 
 def query_bpm():
     user_input = input("Please enter something: ")
     print("You entered: " + user_input)
     return user_input
 
-
 def main():
     bpm = float(query_bpm())
     beat = 0
     next_beat_time = time.time()
+    beat_symbols = ['\\', '.|', '../', '...-']  # List of beat symbols
 
     def on_key(key):
         nonlocal bpm, beat, next_beat_time
@@ -31,20 +29,19 @@ def main():
     def update(_loop, _data):
         nonlocal bpm, beat, next_beat_time
         next_beat_time += 60.0 / bpm
-        beat = (beat + 1) % 4  # Increment beat first, then apply modulo
-        if beat == 0:  # Now this will be true every four beats
+        beat = (beat + 1) % 4
+        if beat == 0:
             accent_sound.play()
         else:
             beat_sound.play()
-        text.set_text(f"BPM: {bpm}\nBeat: {beat + 1}")  # Display beat as 1-4 for user-friendliness
+        text.set_text(f"BPM: {bpm}\nBeat: {beat_symbols[beat]}")  # Display the current beat symbol
         loop.set_alarm_at(next_beat_time, update)
 
-    text = urwid.Text(f"BPM: {bpm}\nBeat: {beat}")
+    text = urwid.Text(f"BPM: {bpm}\nBeat: {beat_symbols[beat]}")
     filler = urwid.Filler(text, 'top')
     loop = urwid.MainLoop(filler, unhandled_input=on_key)
     loop.set_alarm_at(next_beat_time, update)
     loop.run()
-
 
 if __name__ == "__main__":
     main()

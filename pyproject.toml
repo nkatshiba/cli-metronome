@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "per-metronome"
+name = "cli-metronome"
 version = "0.1.0"
 description = ""
 authors = ["nkatshiba <nkatshiba@proton.me>"]
