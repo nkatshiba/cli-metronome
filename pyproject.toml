@@ -13,6 +13,7 @@ npyscreen = "^4.10.5"
 py-cui = "^0.1.6"
 simpleaudio = "^1.0.4"
 sounddevice = "^0.4.6"
+urwid = "^2.3.4"
 
 
 [build-system]
