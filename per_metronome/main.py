@@ -1,6 +1,7 @@
-import time
-import curses
+import npyscreen
 import pygame
+import time
+import threading
 
 pygame.mixer.init()
 
@@ -8,54 +9,39 @@ beat_sound = pygame.mixer.Sound('sounds/high.wav')
 accent_sound = pygame.mixer.Sound('sounds/bright.wav')
 
 
-def main(stdscr):
-    # Set up the screen
-    curses.curs_set(0)
-    stdscr.nodelay(1)
-    stdscr.timeout(100)
+class MetronomeApp(npyscreen.NPSAppManaged):
+    def onStart(self):
+        self.bpm = 120
+        self.addForm('MAIN', MetronomeForm, name="Metronome")
 
-    # Initialize BPM
-    bpm = 120
-    beat = 0
 
-    # Initialize the time for the next beat
-    next_beat_time = time.time()
+class MetronomeForm(npyscreen.Form):
+    def create(self):
+        self.bpm = self.add(npyscreen.TitleSlider,
+                            out_of=300, name="BPM", value=120)
+        self.beat = self.add(npyscreen.TitleFixedText, name="Beat", value="1")
 
-    while True:
-        # Calculate the time to wait before playing the next sound
-        next_beat_time += 60.0 / bpm
+        # Start the metronome thread
+        metronome_thread = threading.Thread(target=self.update, daemon=True)
+        metronome_thread.start()
 
-        # Display the current BPM and beat
-        stdscr.clear()
-        stdscr.addstr(0, 0, f"BPM: {bpm}")
-        stdscr.addstr(1, 0, f"Beat: {beat+1}")
+    def while_waiting(self):
+        self.parentApp.bpm = int(self.bpm.value)
 
-        # Play the beat
-        if beat == 0:
-            # Accent on the first beat
-            accent_sound.play()
-        else:
-            beat_sound.play()
+    def update(self):
+        while True:
+            for beat in range(4):
+                self.beat.value = str(beat + 1)
+                self.beat.display()
 
-        # Advance to the next beat
-        beat = (beat + 1) % 4
+                if beat == 0:
+                    accent_sound.play()
+                else:
+                    beat_sound.play()
 
-        # Check for key presses
-        c = stdscr.getch()
-
-        if c == ord('q'):
-            # Quit if 'q' is pressed
-            break
-        elif c == ord('+'):
-            # Increase BPM if '+' is pressed
-            bpm = min(bpm + 1, 300)
-        elif c == ord('-'):
-            # Decrease BPM if '-' is pressed
-            bpm = max(bpm - 1, 20)
-
-        # Wait for the next beat
-        time.sleep(max(0, next_beat_time - time.time()))
+                time.sleep(60.0 / self.parentApp.bpm)
 
 
 if __name__ == "__main__":
-    curses.wrapper(main)
+    app = MetronomeApp()
+    app.run()
