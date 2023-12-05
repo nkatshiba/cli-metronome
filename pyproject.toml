@@ -10,6 +10,9 @@ python = "^3.11"
 numpy = "^1.26.2"
 pygame = "^2.5.2"
 npyscreen = "^4.10.5"
+py-cui = "^0.1.6"
+simpleaudio = "^1.0.4"
+sounddevice = "^0.4.6"
 
 
 [build-system]
