@@ -1,4 +1,7 @@
 import time
+
+from os import environ
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 import urwid
 
@@ -6,16 +9,18 @@ pygame.mixer.init()
 beat_sound = pygame.mixer.Sound('sounds/high.wav')
 accent_sound = pygame.mixer.Sound('sounds/bright.wav')
 
+
 def query_bpm():
-    user_input = input("Please enter something: ")
-    print("You entered: " + user_input)
-    return user_input
+    bpm = input("Choose BPM> ")
+    print("BPM: " + bpm)
+    return bpm
+
 
 def main():
     bpm = float(query_bpm())
     beat = 0
     next_beat_time = time.time()
-    beat_symbols = ['\\', '.|', '../', '...-']  # List of beat symbols
+    beat_symbols = ['\\...', '.|..', '../.', '...-']  # List of beat symbols
 
     def on_key(key):
         nonlocal bpm, beat, next_beat_time
@@ -42,6 +47,7 @@ def main():
     loop = urwid.MainLoop(filler, unhandled_input=on_key)
     loop.set_alarm_at(next_beat_time, update)
     loop.run()
+
 
 if __name__ == "__main__":
     main()

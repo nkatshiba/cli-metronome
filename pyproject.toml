@@ -6,7 +6,7 @@ authors = ["nkatshiba <nkatshiba@proton.me>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.11"
 numpy = "^1.26.2"
 pygame = "^2.5.2"
 npyscreen = "^4.10.5"
@@ -14,7 +14,11 @@ py-cui = "^0.1.6"
 simpleaudio = "^1.0.4"
 sounddevice = "^0.4.6"
 urwid = "^2.3.4"
+pyinstaller = "^6.2.0"
 
+[tool.poetry.scripts]
+# build = "cli_metrononome.pyinstaller:install"
+build = "poetry run pyinstaller main.py --collect-submodules application --onefile --name myapi"
 
 [build-system]
 requires = ["poetry-core"]
