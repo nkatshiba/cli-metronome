@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to cli-metronome 👋</h1>
+<h1 align="center">A simple CLI metronome written in python 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
@@ -8,7 +8,7 @@
 
 > CLI Metronome is a simple command-line application that generates beats at a user-specified BPM (beats per minute). It uses the Pygame library for sound effects and the Urwid library for the user interface.
 
-### 🏠 [Homepage](https://github.com/nkatshiba/cli-metronome)
+### 🏠 [Homepage](https://github.com/nkatshiba/cli-metronome-python)
 ## Features
 
 - Set the BPM manually or let the program ask you.
@@ -35,9 +35,3 @@ Once the program is running, you can adjust the BPM using the '+' and '-' keys. 
 
 * Website: https://www.nkat.se/ | https://www.vimkat.com/
 * Github: [@nkatshiba](https://github.com/nkatshiba)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-***
