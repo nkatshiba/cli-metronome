@@ -1,4 +1,4 @@
-<h1 align="center">A simple CLI metronome written in python 👋</h1>
+<h1 align="center">A simple CLI metronome written in Python 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
